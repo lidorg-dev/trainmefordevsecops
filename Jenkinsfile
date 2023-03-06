@@ -29,12 +29,16 @@ pipeline {
         }
         stage('Post to Docker Hub  ') {
             steps {
-                     sh ''
+                docker.withregistry('https://registry.hub.docker.com','dockerhub') {
+                    app.push("${env.BUILD_ID}")
+                    }
                 }
         }
         stage('Pull image Server  ') {
             steps {
-                     sh ''
+                     sh 'docker-compose down'
+                     sh 'docker-compose up'
+                
                 }
         }
         stage('DAAST  ') {
