@@ -29,9 +29,11 @@ pipeline {
         }
         stage('Post to Docker Hub  ') {
             steps {
-                docker.withregistry('https://registry.hub.docker.com','dockerhub') {
+                script {
+                docker.withRegistry('https://registry.hub.docker.com','dockerhub') {
                     app.push("${env.BUILD_ID}")
                     }
+                }
                 }
         }
         stage('Pull image Server  ') {
